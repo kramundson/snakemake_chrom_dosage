@@ -1,0 +1,61 @@
+units: units.tsv
+
+genome: "data/genome/potato_dm_v404_all_pm_un_chloro_mito.fasta"
+
+organelle_genomes:
+    nucleus: "data/genome/potato_dm_v404_all_pm_un.fasta"
+    chloroplast: "data/genome/S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta"
+    mitochondrion: "data/genome/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta"
+    
+genomelinks:
+    nucleus: "http://solanaceae.plantbiology.msu.edu/data/potato_dm_v404_all_pm_un.fasta.zip"
+    chloroplast: "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta.zip"
+    mitochondrion: "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta.zip"
+
+# sequencing adapter
+adapter: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTGTTCCTGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+
+params:
+
+    prefetch:
+        ascp: "--ascp-path '/home/kramundson/.aspera/connect/bin/ascp|/home/kramundson/.aspera/connect/etc/asperaweb_id_dsa.openssh' --max-size 50000000000"
+        threads: 4
+
+    cutadapt-pe:
+        qual: "-q 10 -m 40 -j 8"
+        threads: 8
+    
+    cutadapt-se:
+        qual: "-q 10 -m 40 -j 8"
+        threads: 8
+    
+    cutadapt-hardtrim:
+        qual: "-q 10 -m 40 -l 50 -j 8"
+        threads: 8
+    
+    align:
+        threads: 8
+        sort_mem: 4G
+    
+    mark_duplicates:
+        jarpath: "/home/kramundson/miniconda3/envs/gatk-potato/share/picard-2.14.1-0/picard.jar" # run on cluster
+        java_heap: "-Xms512m -Xmx4g"
+        opt: "REMOVE_DUPLICATES=true TMP_DIR=./tmp ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000"
+    
+    bedtools:
+        window: 1000000
+
+dosage_control: "data/bedtools_coverage/control_4x_LOP868-SRR6123032-windowcov.bed"
+
+targets:
+#     - "data/dedup/2x_LOP868_004-KFRAG_00003-dedup-sorted.aln.bam"
+#     - "data/dedup/2x_LOP868_064-KFRAG_00028-dedup-sorted.aln.bam"
+#     - "data/dedup/2x_LOP868_305-KFRAG_00092-dedup-sorted.aln.bam"
+#     - "data/dedup/control_4x_LOP868-SRR6123032-dedup-sorted.aln.bam"
+    - "data/bedtools_coverage/2x_LOP868_004-KFRAG_00003-windowcov.bed"
+    - "data/bedtools_coverage/2x_LOP868_064-KFRAG_00028-windowcov.bed"
+    - "data/bedtools_coverage/2x_LOP868_305-KFRAG_00092-windowcov.bed"
+    - "data/bedtools_coverage/control_4x_LOP868-SRR6123032-windowcov.bed"
+#    - "data/plots/2x_LOP868_004-KFRAG_00003-dosage_plot.pdf"
+#    - "data/plots/2x_LOP868_064-KFRAG_00028-dosage_plot.pdf"
+#    - "data/plots/2x_LOP868_305-KFRAG_00092-dosage_plot.pdf"

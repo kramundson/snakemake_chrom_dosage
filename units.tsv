@@ -1,0 +1,5 @@
+sample	unit	fq1	fq2	parhap
+2x_LOP868_004	KFRAG_00003	KFRAG_00003.fq.gz	NaN	haploid
+2x_LOP868_064	KFRAG_00028	KFRAG_00028.fq.gz	NaN	haploid
+2x_LOP868_305	KFRAG_00092	KFRAG_00092.fq.gz	NaN	haploid
+control_4x_LOP868	SRR6123032	SRR6123032_1.fastq.gz	NaN	mother

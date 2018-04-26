@@ -1,0 +1,47 @@
+{
+    "__default__" :
+    {
+        "account" : "kramundson",
+        "time" : "12:00:00",
+        "c" : 1,
+        "n" : 1,
+        "partition" : "gc",
+        "mempercpu" : "2G"
+    },
+    "get_genome" :
+    { default },
+    "get_SRA_reads" :
+    {
+        "time" : "3-00:00:00",
+        "c" : 4
+     },
+    "cutadapt_pe" :
+    {
+        "time" : "18:01:00",
+        "c" : 8, # note, change to whatever current threading in Snakefile is
+        "mempercpu" : "8G"
+    },
+    "cutadapt" :
+    {
+        "time" : "18:01:00",
+        "c" : 8, # note, change to whatever current threading in Snakefile is
+    },
+    "bwa_index" :
+    { default },
+    "align" :
+    {
+        "time" : "2-00:00:00",
+        "c" : 8, # note, change as needed
+        "mempercpu" : "8G"
+    },
+    "mark_duplicates" :
+    {
+        "time" : "18:00:00",
+        "mempercpu" : "6G",
+        "c" : 1
+    },
+    "samtools_index":
+    { default },
+    "samtools_faidx":
+    { default },
+}

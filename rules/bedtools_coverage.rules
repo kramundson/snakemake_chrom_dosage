@@ -1,0 +1,18 @@
+# todo: tweak overlap to be comparable with bin by sam edge cases
+# I'm thinking of doing this with -F option: minimum overlap required as a fraction of B
+# and having the minimum overlap fraction be 0.5, i.e., at least half of the read must
+# align to the bin at hand for it to be counted. Unlikely to affect that many reads, especially
+# in low coverage data.
+
+rule bedtools_coverage:
+    input:
+        windows=re.sub("(\.fasta$|\.fa$)", ".windows", config["genome"]),
+        genome=config["genome"],
+        bam="data/dedup/{sample}-{unit}-dedup-sorted.aln.bam",
+        bai="data/dedup/{sample}-{unit}-dedup-sorted.aln.bam.bai"
+    output:
+        "data/bedtools_coverage/{sample}-{unit}-windowcov.bed"
+    shell: '''
+        bedtools coverage -sorted -nonamecheck -header -g {input.genome}
+        -F 0.5 -a {input.windows} -b {input.bam} > {output}
+    '''
