@@ -1,6 +1,6 @@
 rule cutadapt:
     input:
-        get_fastq
+        get_fastq_test
     output:
         fastq="data/trimmed/{sample}-{unit}.fastq.gz",
         qc="data/trimmed/{sample}-{unit}.qc.txt"

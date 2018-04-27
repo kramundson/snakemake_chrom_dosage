@@ -1,12 +1,13 @@
 rule cutadapt_hardtrim:
     input:
-        "data/reads/control_{sample}-{unit}.fastq.gz"
+        get_fastq_control
     output:
-        "data/trimmed/dosage_control_4x_LOP868-SRR6123032-1.fastq.gz"
+        fastq="data/trimmed/{sample}-{unit}.fastq.gz",
+        qc="data/trimmed/{sample}-{unit}.qc.txt"
     threads: config["params"]["cutadapt-hardtrim"]["threads"]
     params:
-        "-a {} -A {} {}".format(config["adapter"], config["adapter"], config["params"]["cutadapt-hardtrim"]["qual"])
+        "-a {} {}".format(config["adapter"], config["params"]["cutadapt-hardtrim"]["qual"])
     log:
-        "logs/cutadapt/dosage_control_{sample}-{unit}.log"
+        "logs/cutadapt/{sample}-{unit}.log"
     wrapper:
         "0.17.4/bio/cutadapt/se"

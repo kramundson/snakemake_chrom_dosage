@@ -7,7 +7,7 @@ rule bedtools_genome_windows:
         fai=config["genome"]+".fai",
     output:
         bedtools_genome=re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
-        bedtools_windows=re.sub("(\.fasta$|\.fa$)", ".windows", config["genome"])
+        bedtools_windows=re.sub("(\.fasta$|\.fa$)", "_windows.bed", config["genome"])
     params:
         window=config["params"]["bedtools"]["window"]
     shell: """

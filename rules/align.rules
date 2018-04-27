@@ -1,6 +1,6 @@
 rule align:
     input:
-        reads=get_trimmed, # doesn't catch control sample at the moment.
+        reads=get_trimmed,
         ref=config["genome"],
         index=config["genome"]+'.bwt'
     output:

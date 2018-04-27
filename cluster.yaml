@@ -26,6 +26,17 @@
         "time" : "18:01:00",
         "c" : 8, # note, change to whatever current threading in Snakefile is
     },
+    "cutadapt_hardtrim" :
+    {
+        "time" : "18:01:00",
+        "c" : 8
+    },
+    "bedtools_coverage" :
+    {
+        "time" : "4:00:00",
+        "c" : 1,
+        "mempercpu": "4G"
+    },
     "bwa_index" :
     { default },
     "align" :

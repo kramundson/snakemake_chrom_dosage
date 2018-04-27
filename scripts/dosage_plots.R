@@ -26,10 +26,21 @@ fh <- read.csv(args[1],
                col.names=header.temp)
 
 # read in control
-fh.con <- read.csv(args[2],sep = '\t',comment.char = "#",header=F,col.names = header.temp)
+fh.con <- read.csv(args[2],
+                   header=F,
+                   sep = '\t',
+                   comment.char = "#",
+                   col.names = header.temp)
 
 # Compute normalized coverage
 fh$normcov <- 2*(fh$readcount/sum(fh$readcount)) / (fh.con$readcount / sum(fh.con$readcount))
+
+# Filter out non-pseudomolecule scaffolds
+chrs <- c("chr01","chr02","chr03","chr04","chr05","chr06",
+          "chr07", "chr08", "chr09", "chr10", "chr11","chr12")
+
+fh.filtered <- subset(fh, chrom %in% chrs)
+fh.filtered$chrom <- factor(fh.filtered$chrom)
 
 # Define functions for plot aesthetics
 
@@ -47,17 +58,17 @@ plot.dosage <- function(x,y) {
                                "bin"=stuf.d)
   x$bin <- seq(1,nrow(x))
   chr.list.dosage <- split(x, f=x$chrom)
-  chr.list.dosage.stuffed <- lapply(chr.list.dosage[2:12], function(x) rbind(x,dosage.stuffer))
-  chr.list.dosage.stuffed <- dplyr::bind_rows(chr.list.dosage.stuffed, chr.list.dosage[13])
+  chr.list.dosage.stuffed <- lapply(chr.list.dosage[1:11], function(x) rbind(x,dosage.stuffer))
+  chr.list.dosage.stuffed <- dplyr::bind_rows(chr.list.dosage.stuffed, chr.list.dosage[12])
   chr.list.dosage.stuffed$bin2 <- seq(1:nrow(chr.list.dosage.stuffed))
   chr.list.dosage.stuffed$normcov <- as.numeric(chr.list.dosage.stuffed$normcov) # force as numeric if not
   
-  midpoints.dosage <- sapply(chr.list.dosage[2:13],mid.dosage)
+  midpoints.dosage <- sapply(chr.list.dosage[1:12],mid.dosage)
   
   plt.dosage <- ggplot(chr.list.dosage.stuffed, aes(x=bin2,y=normcov)) +
     labs(x="",y="Copy Number") +
     geom_line(color="#008080",fill="white",size=1) + # color currently hardcoded
-    ggtitle(names(y)) +
+    ggtitle(y) +
     geom_point(aes(x=bin2,y=normcov), size=1.0, color="black") +
     guides(fill=F,color=F) +
     scale_x_continuous(breaks=which(chr.list.dosage.stuffed$bin %in% midpoints.dosage),
@@ -70,12 +81,12 @@ plot.dosage <- function(x,y) {
           panel.background=element_rect(fill="white",color="black"),
           axis.text.x=element_text(size=12,color="black"),
           axis.text.y=element_text(size=12,color="black"),
-          axis.title.y=element_text(size=18,angle=90,vjust=0.5),
+          axis.title.y=element_text(size=12,angle=90,vjust=0.5),
           axis.ticks=element_blank(),
-          plot.title=element_text(size=24,face="bold",hjust=0))
+          plot.title=element_text(size=12,face="bold",hjust=0))
   write.table(chr.list.dosage.stuffed, gsub(".pdf", ".tsv", args[3]), 
               quote=F,eol='\n',row.names=F)
-  ggsave(args[3], width=10,height=6,units="in",plot=plt.dosage,device="pdf")
+  ggsave(args[3], width=10,height=2,units="in",plot=plt.dosage,device="pdf")
 }
 
-plot.dosage("fh","foo")
+plot.dosage(fh.filtered,gsub("-.+-windowcov.bed", "", args[2]))

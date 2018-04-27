@@ -1,6 +1,6 @@
 rule cutadapt_pe:
     input:
-        get_fastq
+        get_fastq_test
     output:
         fastq1="data/trimmed/{sample}-{unit}-1.fastq.gz",
         fastq2="data/trimmed/{sample}-{unit}-2.fastq.gz",
