@@ -18,19 +18,19 @@ args = commandArgs(trailingOnly = TRUE)
 # define header for BED format table output from bedtools coverage
 header.temp <- c("chrom","start","end","readcount","bases_covered", "binsize", "breadth")
 
-# read in a single bedtools coverage output table
-fh <- read.csv(args[1],
-               header=F,
-               sep='\t',
-               comment.char="#",
-               col.names=header.temp)
-
 # read in control
-fh.con <- read.csv(args[2],
+fh.con <- read.csv(args[1],
                    header=F,
                    sep = '\t',
                    comment.char = "#",
                    col.names = header.temp)
+
+# read in a single bedtools coverage output table
+fh <- read.csv(args[2],
+               header=F,
+               sep='\t',
+               comment.char="#",
+               col.names=header.temp)
 
 # Compute normalized coverage
 fh$normcov <- 2*(fh$readcount/sum(fh$readcount)) / (fh.con$readcount / sum(fh.con$readcount))

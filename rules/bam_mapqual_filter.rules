@@ -1,0 +1,9 @@
+rule bam_mapqual_filter:
+    input:
+        "data/dedup/{sample}-{unit}-dedup.sorted.aln.bam"
+    output:
+        "data/dedup-filter/{sample}-{unit}-dedup.sorted.aln.bam"
+    params:
+        config["mapqual_filter"]
+    shell:
+        "samtools view {params} -o {output} {input}"
