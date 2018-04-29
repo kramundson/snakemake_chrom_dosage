@@ -37,17 +37,30 @@ rule all:
     input: # TODO gather step for dosage plots, probably need gatekeeper pseudorules
         config["targets"]
 
-include: "rules/get_SRA_reads.rules"
-include: "rules/cutadapt_hardtrim.rules"
-include: "rules/cutadapt.rules"
-include: "rules/cutadapt_pe.rules"
-include: "rules/align.rules"
-include: "rules/mark_duplicates.rules"
+include: "rules/dosage_plot_fofn.rules"
+include: "rules/dosage_plots.rules"
+include: "rules/bedtools_coverage.rules"
 include: "rules/samtools_index.rules"
 include: "rules/bam_mapqual_filter.rules"
-include: "rules/bedtools_coverage.rules"
-include: "rules/dosage_plots.rules"
-include: "rules/dosage_plot_fofn.rules"
+include: "rules/mark_duplicates.rules"
+include: "rules/align.rules"
+include: "rules/cutadapt_pe.rules"
+include: "rules/cutadapt.rules"
+include: "rules/cutadapt_hardtrim.rules"
+include: "rules/get_SRA_reads.rules"
+
+# reverse order of rules: last executed goes first in order. Does this make a difference?
+# include: "rules/get_SRA_reads.rules"
+# include: "rules/cutadapt_hardtrim.rules"
+# include: "rules/cutadapt.rules"
+# include: "rules/cutadapt_pe.rules"
+# include: "rules/align.rules"
+# include: "rules/mark_duplicates.rules"
+# include: "rules/bam_mapqual_filter.rules"
+# include: "rules/samtools_index.rules"
+# include: "rules/bedtools_coverage.rules"
+# include: "rules/dosage_plots.rules"
+# include: "rules/dosage_plot_fofn.rules"
 
 # new rules to put in
 # include: "rules/bam_mapQualFilter.rules" # experiment with this later. Would like to side by side this.

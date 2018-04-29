@@ -4,9 +4,9 @@ rule cutadapt_hardtrim:
     output:
         fastq="data/trimmed/{sample}-{unit}.fastq.gz",
         qc="data/trimmed/{sample}-{unit}.qc.txt"
-    threads: config["params"]["cutadapt-hardtrim"]["threads"]
+    threads: config["params"]["cutadapt_hardtrim"]["threads"]
     params:
-        "-a {} {}".format(config["adapter"], config["params"]["cutadapt-hardtrim"]["qual"])
+        "-a {} {}".format(config["adapter"], config["params"]["cutadapt_hardtrim"]["qual"])
     log:
         "logs/cutadapt/{sample}-{unit}.log"
     wrapper:

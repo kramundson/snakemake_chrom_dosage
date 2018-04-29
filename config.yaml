@@ -21,15 +21,15 @@ params:
         ascp: "--ascp-path '/home/kramundson/.aspera/connect/bin/ascp|/home/kramundson/.aspera/connect/etc/asperaweb_id_dsa.openssh' --max-size 50000000000"
         threads: 4
 
-    cutadapt-pe:
+    cutadapt_pe:
         qual: "-q 10 -m 40 -j 8"
         threads: 8
     
-    cutadapt-se:
+    cutadapt_se:
         qual: "-q 10 -m 40 -j 8"
         threads: 8
     
-    cutadapt-hardtrim:
+    cutadapt_hardtrim:
         qual: "-q 10 -m 40 -l 50 -j 8"
         threads: 8
     
@@ -44,6 +44,8 @@ params:
     
     bedtools:
         window: 1000000
+    
+    map_qual_filter: "-q 10"
 
 dosage_control: "data/bedtools_coverage/4x_LOP868-SRR6123032-windowcov.bed"
 
