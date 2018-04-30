@@ -39,6 +39,7 @@ rule all:
 
 include: "rules/dosage_plot_fofn.rules"
 include: "rules/dosage_plots.rules"
+include: "rules/dosage_plot_population.rules"
 include: "rules/bedtools_coverage.rules"
 include: "rules/samtools_index.rules"
 include: "rules/bam_mapqual_filter.rules"

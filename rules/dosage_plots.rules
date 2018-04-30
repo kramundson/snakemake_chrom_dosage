@@ -1,7 +1,7 @@
 rule dosage_plots:
     input:
         controlbed=config["dosage_control"],
-        testbed="data/bedtools_coverage/{sample}-{unit}-windowcov.bed"
+        testbed="data/bedtools_coverage/{sample}-{unit}-windowcov.bed",
     output:
         "data/plots/{sample}-{unit}-dosage_plot.pdf"
     shell:

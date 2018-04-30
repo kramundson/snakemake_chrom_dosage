@@ -1,9 +1,17 @@
 rule make_fofn:
-    input: "units.tsv"
-    output: "fofn/dosage_plots.fofn"
+    input:
+        "units.tsv"
+    output:
+        "fofn/dosage_plots.fofn",
+        "fofn/bedfiles.fofn"
     shell: """
         cut -f 1-2 {input} | tr '\t' '-' | \
         grep -v 'sample' | \
         sed 's/^/data\/plots\//g' | \
-        sed 's/$/-dosage_plot.pdf/g' > {output}
+        sed 's/$/-dosage_plot.pdf/g' > {output[0]}
+        
+        cut -f 1-2 {input} | tr '\t' '-' | \
+        grep -v 'sample' | \
+        sed 's/^/data\/bedtools_coverage\//g' | \
+        sed 's/$/-windowcov.bed/g' > {output[1]}
     """

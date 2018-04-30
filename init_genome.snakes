@@ -27,7 +27,8 @@ rule all:
         config["genome"]+".fai",
         re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
         re.sub("(\.fasta$|\.fa$)", "_windows.bed", config["genome"]),
-        "fofn/dosage_plots.fofn"
+        "fofn/dosage_plots.fofn",
+        "fofn/bedfiles.fofn"
 
 include: "rules/get_genome.rules"
 include: "rules/clean_genomes.rules"

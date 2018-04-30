@@ -1,0 +1,8 @@
+rule dosage_plot_population:
+    input:
+        controlbed=config["dosage_control"],
+        bedfiles="fofn/bedfiles.fofn"
+    output:
+        "data/plots/all_samples_dosage_plot.pdf"
+    shell:
+        "Rscript scripts/dosage_plots_population.R {input.controlbed} {input.bedfiles} {output}"

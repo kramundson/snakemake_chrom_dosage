@@ -1,6 +1,7 @@
 rule dosage_plot_fofn:
     input:
-        [line.rstrip('\n') for line in open("fofn/dosage_plots.fofn")]
+        [line.rstrip('\n') for line in open("fofn/dosage_plots.fofn")],
+        "data/plots/all_samples_dosage_plot.pdf"
     output:
         "fofn/dosage_plots.made"
     shell:
