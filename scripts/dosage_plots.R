@@ -50,7 +50,7 @@ mid.dosage <- function(x,y) { # x, y is title of plot
 }
 
 plot.dosage <- function(x,y) {
-  numblanks.dosage <- 15 # is aesthetically pleasing for 1Mb bins, but can customize to accommodate any bin size or number of chromosomes
+  numblanks.dosage <- 15
   stuf.d <- c(rep(NA, numblanks.dosage))
   dosage.stuffer <- data.frame("chrom"=stuf.d, "start"=stuf.d, "end"=stuf.d,
                                "readcount"=stuf.d, "bases_covered"=stuf.d,
@@ -73,7 +73,7 @@ plot.dosage <- function(x,y) {
     guides(fill=F,color=F) +
     scale_x_continuous(breaks=which(chr.list.dosage.stuffed$bin %in% midpoints.dosage),
                        labels=names(midpoints.dosage)) +
-    scale_y_continuous(limits=c(0.75,4.25), breaks=seq(1,4), labels=seq(1,4)) +
+    scale_y_continuous(limits=c(0.5,5), breaks=seq(1,5), labels=seq(1,5)) +
     theme(panel.grid.minor.x=element_blank(),
           panel.grid.minor.y=element_blank(),
           panel.grid.major.x=element_blank(),
@@ -89,4 +89,6 @@ plot.dosage <- function(x,y) {
   ggsave(args[3], width=10,height=2,units="in",plot=plt.dosage,device="pdf")
 }
 
-plot.dosage(fh.filtered,gsub("-.+-windowcov.bed", "", args[2]))
+# modify plot title
+title <- gsub(".+/[0-9]x_([A-Za-z0-9]+)", "\\1", args[2])
+plot.dosage(fh.filtered,title)
