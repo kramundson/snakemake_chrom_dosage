@@ -54,3 +54,5 @@ plt <- ggplot(df.filtered, aes(x=chrbin,y=normcov)) +
   guides(color = F) +
   scale_y_continuous(limits=c(0.5,4))
 ggsave(args[3], width=16, height=9, units="in",plot=plt,device="pdf")
+
+write.table(df.filtered, file="pop_dosag.tsv", quote = F, sep = '\t', eol = '\n', na = "NA", row.names = FALSE, col.names = TRUE)

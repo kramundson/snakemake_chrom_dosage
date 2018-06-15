@@ -44,7 +44,7 @@ fh.filtered$chrom <- factor(fh.filtered$chrom)
 
 # Define functions for plot aesthetics
 
-mid.dosage <- function(x,y) { # x, y is title of plot
+mid.dosage <- function(x) {
   n=floor(nrow(x)/2)
   return(x$bin[n])
 }
@@ -73,7 +73,7 @@ plot.dosage <- function(x,y) {
     guides(fill=F,color=F) +
     scale_x_continuous(breaks=which(chr.list.dosage.stuffed$bin %in% midpoints.dosage),
                        labels=names(midpoints.dosage)) +
-    scale_y_continuous(limits=c(0.5,5), breaks=seq(1,5), labels=seq(1,5)) +
+    scale_y_continuous(limits=c(0,5), breaks=seq(0,5), labels=seq(0,5)) +
     theme(panel.grid.minor.x=element_blank(),
           panel.grid.minor.y=element_blank(),
           panel.grid.major.x=element_blank(),
@@ -90,5 +90,5 @@ plot.dosage <- function(x,y) {
 }
 
 # modify plot title
-title <- gsub(".+/[0-9]x_([A-Za-z0-9]+)", "\\1", args[2])
+title <- gsub(".+/([A-Za-z0-9_-]+)-windowcov.bed", "\\1", args[2])
 plot.dosage(fh.filtered,title)

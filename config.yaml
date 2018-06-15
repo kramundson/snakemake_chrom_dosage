@@ -13,7 +13,8 @@ genomelinks:
     mitochondrion: "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta.zip"
 
 # sequencing adapter
-adapter: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTGTTCCTGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+#adapter: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTGTTCCTGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+adapter: AGATCGGAAGAGC
 
 params:
 
@@ -47,9 +48,15 @@ params:
     
     map_qual_filter: "-q 10"
 
-dosage_control: "data/bedtools_coverage/4x_LOP868-SRR6123032-windowcov.bed"
+dosage_control:
+#    - "data/bedtools_coverage/4x_LOP868-SRR6123032-windowcov.bed"
+    - "data/bedtools_coverage/4x_LOP868-windowcov.bed"
 
 targets:
+    - "data/merged/4x_LOP868.bam"
+    - "data/mapQ-filter/4x_LOP868.bam"
+    - "data/bedtools_coverage/4x_LOP868-windowcov.bed"
+    - "data/plots/4x_LOP868-dosage_plot.pdf"
     - "fofn/dosage_plots.made"
 #     - "data/dedup/2x_LOP868_004-KFRAG_00003-dedup-sorted.aln.bam"
 #     - "data/dedup/2x_LOP868_064-KFRAG_00028-dedup-sorted.aln.bam"

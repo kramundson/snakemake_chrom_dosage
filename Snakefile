@@ -14,8 +14,8 @@ units.index = units.index.set_levels([i.astype(str) for i in units.index.levels]
 def is_single_end(sample,unit):
     return pd.isnull(units.loc[(sample, unit), "fq2"])
 
-# def get_fastq(wildcards):
-#     return "data/reads/"+units.loc[(wildcards.sample, wildcards.unit), ['fq1', 'fq2']].dropna()
+def get_fastq(wildcards):
+    return "data/reads/"+units.loc[(wildcards.sample, wildcards.unit), ['fq1', 'fq2']].dropna()
 
 def get_fastq_test(wildcards):
     tmp = units.loc[units['parhap'] != 'mother']
@@ -33,6 +33,9 @@ def get_trimmed(wildcards):
     # single end sample
     return "data/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards)
 
+# def sample_bams(wildcards):
+#     return [line.rstrip('\n') for line in open("fofn/{sample}-units.fofn".format(**wildcards))]
+
 rule all:
     input: # TODO gather step for dosage plots, probably need gatekeeper pseudorules
         config["targets"]
@@ -43,25 +46,10 @@ include: "rules/dosage_plot_population.rules"
 include: "rules/bedtools_coverage.rules"
 include: "rules/samtools_index.rules"
 include: "rules/bam_mapqual_filter.rules"
+include: "rules/samtools_merge.rules"
 include: "rules/mark_duplicates.rules"
 include: "rules/align.rules"
 include: "rules/cutadapt_pe.rules"
 include: "rules/cutadapt.rules"
 include: "rules/cutadapt_hardtrim.rules"
 include: "rules/get_SRA_reads.rules"
-
-# reverse order of rules: last executed goes first in order. Does this make a difference?
-# include: "rules/get_SRA_reads.rules"
-# include: "rules/cutadapt_hardtrim.rules"
-# include: "rules/cutadapt.rules"
-# include: "rules/cutadapt_pe.rules"
-# include: "rules/align.rules"
-# include: "rules/mark_duplicates.rules"
-# include: "rules/bam_mapqual_filter.rules"
-# include: "rules/samtools_index.rules"
-# include: "rules/bedtools_coverage.rules"
-# include: "rules/dosage_plots.rules"
-# include: "rules/dosage_plot_fofn.rules"
-
-# new rules to put in
-# include: "rules/bam_mapQualFilter.rules" # experiment with this later. Would like to side by side this.

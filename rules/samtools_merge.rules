@@ -1,0 +1,7 @@
+rule samtools merge:
+    input:
+        "fofn/{sample}-units.fofn"
+    output:
+        "data/merged/{sample}.bam"
+    shell:
+        "samtools merge -b {input} {output}"

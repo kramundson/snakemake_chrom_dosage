@@ -8,11 +8,14 @@ rule bedtools_coverage:
     input:
         windows=re.sub("(\.fasta$|\.fa$)", "_windows.bed", config["genome"]),
         genome=re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
-        bam="data/mapQ-filter/{sample}-{unit}-dedup.sorted.aln.bam",
-        bai="data/mapQ-filter/{sample}-{unit}-dedup.sorted.aln.bam.bai"
+        bam="data/mapQ-filter/{sample}.bam",
+        bai="data/mapQ-filter/{sample}.bam.bai"
+#         bam="data/mapQ-filter/{sample}-{unit}-dedup.sorted.aln.bam",
+#         bai="data/mapQ-filter/{sample}-{unit}-dedup.sorted.aln.bam.bai"
     output:
-        "data/bedtools_coverage/{sample}-{unit}-windowcov.bed"
+#         "data/bedtools_coverage/{sample}-{unit}-windowcov.bed"
+        "data/bedtools_coverage/{sample}-windowcov.bed"
     shell: '''
         bedtools coverage -sorted -nonamecheck -header -g {input.genome} \
             -F 0.5 -a {input.windows} -b {input.bam} > {output}
-    '''
+    ''' 

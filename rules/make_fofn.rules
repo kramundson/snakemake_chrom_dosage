@@ -4,14 +4,33 @@ rule make_fofn:
     output:
         "fofn/dosage_plots.fofn",
         "fofn/bedfiles.fofn"
-    shell: """
-        cut -f 1-2 {input} | tr '\t' '-' | \
-        grep -v 'sample' | \
-        sed 's/^/data\/plots\//g' | \
-        sed 's/$/-dosage_plot.pdf/g' > {output[0]}
+    run:
+        samples = {}
+        bedfiles = []
+        plots = []
+        with open("units.tsv", 'r') as f:
+            f.readline() # header
+            
+            # hash of sample-unit combinations
+            for line in f:
+                l = line.split('\t')
+                if l[0] in samples.keys():
+                    samples[l[0]].append("{}-{}".format(l[0],l[1]))
+                else:
+                    samples[l[0]] = ["{}-{}".format(l[0],l[1])]
         
-        cut -f 1-2 {input} | tr '\t' '-' | \
-        grep -v 'sample' | \
-        sed 's/^/data\/bedtools_coverage\//g' | \
-        sed 's/$/-windowcov.bed/g' > {output[1]}
-    """
+        for i in samples.items():
+            bedfiles.append("data/bedtools_coverage/{}-windowcov.bed".format(i[0]))
+            plots.append("data/plots/{}-dosage_plot.pdf".format(i[0]))
+            o = open("fofn/{}-units.fofn".format(i[0]), 'w')
+            out = ["data/dedup/{}.bam".format(x) for x in i[1]]
+            o.write('\n'.join(out))
+            o.close()
+        
+        o2 = open("fofn/bedfiles.fofn", 'w')
+        o2.write('\n'.join(bedfiles))
+        o2.close()
+        o3 = open("fofn/dosage_plots.fofn", 'w')
+        o3.write('\n'.join(plots))
+        o3.close()
+        
