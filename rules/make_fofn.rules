@@ -24,13 +24,12 @@ rule make_fofn:
             plots.append("data/plots/{}-dosage_plot.pdf".format(i[0]))
             o = open("fofn/{}-units.fofn".format(i[0]), 'w')
             out = ["data/dedup/{}.bam".format(x) for x in i[1]]
-            o.write('\n'.join(out))
+            o.write('\n'.join(out)+'\n')
             o.close()
         
         o2 = open("fofn/bedfiles.fofn", 'w')
-        o2.write('\n'.join(bedfiles))
+        o2.write('\n'.join(bedfiles)+'\n')
         o2.close()
         o3 = open("fofn/dosage_plots.fofn", 'w')
-        o3.write('\n'.join(plots))
+        o3.write('\n'.join(plots)+'\n')
         o3.close()
-        

@@ -33,9 +33,6 @@ def get_trimmed(wildcards):
     # single end sample
     return "data/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards)
 
-# def sample_bams(wildcards):
-#     return [line.rstrip('\n') for line in open("fofn/{sample}-units.fofn".format(**wildcards))]
-
 rule all:
     input: # TODO gather step for dosage plots, probably need gatekeeper pseudorules
         config["targets"]
