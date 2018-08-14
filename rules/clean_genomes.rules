@@ -1,13 +1,16 @@
 rule clean_genomes:
     input:
         "data/genome/{prefix}.fasta"
-#         "data/genome/potato_dm_v404_all_pm_un.fasta",
-#         "data/genome/S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta",
-#         "data/genome/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta"
     output:
         "data/genome/cleaned_{prefix}.fasta"
-#         "data/genome/cleaned_potato_dm_v404_all_pm_un.fasta",
-#         "data/genome/cleaned_S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta",
-#         "data/genome/cleaned_S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta"
-    shell:
-        "python scripts/clean_multifasta.py {input} > {output}"
+    run:
+        o = open(output[0], 'w')
+        with open(input[0], 'r') as handle:
+            for record in SeqIO.parse(handle, 'fasta'):
+                cleaned_record = re.sub("-","_",record.id)
+                if cleaned_record[0:1] == "?":
+                    # reformat, keeping header that is still unique but is more shell friendly
+                    cleaned_record = re.sub("\?", "qmark_segment_", cleaned_record)
+                else:
+                    pass
+                o.write(">{}\n{}\n".format(cleaned_record, record.seq))

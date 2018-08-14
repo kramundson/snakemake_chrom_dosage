@@ -1,10 +1,8 @@
 rule dosage_plots:
     input:
         controlbed=config["dosage_control"],
-#         testbed="data/bedtools_coverage/{sample}-{unit}-windowcov.bed",
-        testbed="data/bedtools_coverage/{sample}-windowcov.bed"
+        testbed="data/bedtools_coverage/{sample}.bed"
     output:
-#         "data/plots/{sample}-{unit}-dosage_plot.pdf"
         "data/plots/{sample}-dosage_plot.pdf"
     shell:
         "Rscript scripts/dosage_plots.R {input.controlbed} {input.testbed} {output}"

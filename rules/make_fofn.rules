@@ -2,12 +2,9 @@ rule make_fofn:
     input:
         "units.tsv"
     output:
-        "fofn/dosage_plots.fofn",
-        "fofn/bedfiles.fofn"
+        "fofn/unit_fofns.made"
     run:
         samples = {}
-        bedfiles = []
-        plots = []
         with open("units.tsv", 'r') as f:
             f.readline() # header
             
@@ -19,17 +16,29 @@ rule make_fofn:
                 else:
                     samples[l[0]] = ["{}-{}".format(l[0],l[1])]
         
+        # keep this code chunk for the future when I will need to dedup individual libraries
+#         for i in samples.items():
+#             o = open("fofn/{}-units.fofn".format(i[0]), 'w')
+#             out = ["data/dedup/{}.bam".format(x) for x in i[1]]
+#             o.write('\n'.join(out)+'\n')
+#             o.close()
+        
         for i in samples.items():
-            bedfiles.append("data/bedtools_coverage/{}-windowcov.bed".format(i[0]))
-            plots.append("data/plots/{}-dosage_plot.pdf".format(i[0]))
             o = open("fofn/{}-units.fofn".format(i[0]), 'w')
-            out = ["data/dedup/{}.bam".format(x) for x in i[1]]
+            out = ["data/aligned_reads/{}.bam".format(x) for x in i[1]]
             o.write('\n'.join(out)+'\n')
             o.close()
         
         o2 = open("fofn/bedfiles.fofn", 'w')
-        o2.write('\n'.join(bedfiles)+'\n')
+        out2 = ["data/bedtools_coverage/{}-windowcov.bed".format(x) for x in list(samples)]
+        o2.write('\n'.join(out2)+'\n')
         o2.close()
+        
         o3 = open("fofn/dosage_plots.fofn", 'w')
-        o3.write('\n'.join(plots)+'\n')
+        out3 = ["data/plots/{}-dosage_plot.pdf".format(x) for x in list(samples)]
+        o3.write('\n'.join(out3)+'\n')
         o3.close()
+
+        o4 = open(output[0], 'w')
+        o.write("Lorem ipsum dolor sit amet")
+        o.close()

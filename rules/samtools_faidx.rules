@@ -5,4 +5,3 @@ rule samtools_faidx:
         config["genome"]+".fai"
     shell:
         "samtools faidx {input}"
-        

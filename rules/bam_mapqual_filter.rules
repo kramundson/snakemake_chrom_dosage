@@ -1,9 +1,7 @@
 rule bam_mapqual_filter:
     input:
-        "data/merged/{sample}.bam"
-#         "data/dedup/{sample}-{unit}.bam"
+         "data/dedup/{sample}.bam"
     output:
-#         "data/mapQ-filter/{sample}-{unit}-dedup.sorted.aln.bam"
         "data/mapQ-filter/{sample}.bam"
     params:
         config["params"]["map_qual_filter"]

@@ -13,13 +13,13 @@
 
 date
 hostname
-cd /share/comailab/kramundson/snakemake_chrom_dosage # modify path as needed
+# cd /share/comailab/kramundson/snakemake_chrom_dosage # modify path as needed
 
-source activate dosage # alter as needed
+source activate /home/kramundson/miniconda3/envs/dosage # alter as needed
 
 snakemake -j 7 -s init_genome.snakes --cluster-config cluster.yaml --cluster "sbatch -p {cluster.partition} -n {cluster.n} -t {cluster.time} -c {cluster.c} --mem-per-cpu {cluster.mempercpu}" -k -w 120
 snakemake -j 999 --cluster-config cluster.yaml --cluster "sbatch -p {cluster.partition} -n {cluster.n} -t {cluster.time} -c {cluster.c} --mem-per-cpu {cluster.mempercpu}" -k -w 120
 
-source deactivate dosage
+source deactivate
 
 date

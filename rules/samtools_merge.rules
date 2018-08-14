@@ -5,4 +5,4 @@ rule samtools_merge:
     output:
         "data/merged/{sample}.bam"
     shell:
-        "samtools merge -b {input} {output}"
+        "samtools merge -b {input[0]} {output}"
