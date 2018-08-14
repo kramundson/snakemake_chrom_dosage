@@ -27,8 +27,7 @@ rule all:
         config["genome"]+".fai",
         re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
         re.sub("(\.fasta$|\.fa$)", "_windows.bed", config["genome"]),
-        "fofn/dosage_plots.fofn",
-        "fofn/bedfiles.fofn"
+        "fofn/unit_fofns.made"
 
 include: "rules/get_genome.rules"
 include: "rules/clean_genomes.rules"
@@ -36,4 +35,4 @@ include: "rules/combine_genomes.rules"
 include: "rules/bwa_index.rules"
 include: "rules/samtools_faidx.rules"
 include: "rules/bedtools_genome_windows.rules"
-include: "rules/make_fofn.rules" # update
+include: "rules/make_fofn.rules"

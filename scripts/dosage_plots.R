@@ -90,5 +90,5 @@ plot.dosage <- function(x,y) {
 }
 
 # modify plot title
-title <- gsub(".+/([A-Za-z0-9_-]+)-windowcov.bed", "\\1", args[2])
+title <- gsub(".+/([A-Za-z0-9_-]+).bed", "\\1", args[2])
 plot.dosage(fh.filtered,title)

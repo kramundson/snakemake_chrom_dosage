@@ -1,15 +1,12 @@
 units: units.tsv
 
 genome: "data/genome/potato_dm_v404_all_pm_un_chloro_mito.fasta"
-
-organelle_genomes: ["potato_dm_v404_all_pm_un.fasta",
-                    "S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta",
-                    "S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta"]
     
 genomelinks:
-    nucleus: "http://solanaceae.plantbiology.msu.edu/data/potato_dm_v404_all_pm_un.fasta.zip"
-    chloroplast: "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta.zip"
-    mitochondrion: "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta.zip"
+    ["http://solanaceae.plantbiology.msu.edu/data/potato_dm_v404_all_pm_un.fasta.zip", "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta.zip","http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta.zip"]
+              
+organelle_genomes:
+    ["potato_dm_v404_all_pm_un.fasta","S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta","S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta"]
 
 # sequencing adapter
 adapter: AGATCGGAAGAGC

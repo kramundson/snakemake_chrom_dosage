@@ -40,5 +40,5 @@ rule make_fofn:
         o3.close()
 
         o4 = open(output[0], 'w')
-        o.write("Lorem ipsum dolor sit amet")
-        o.close()
+        o4.write("Lorem ipsum dolor sit amet")
+        o4.close()
