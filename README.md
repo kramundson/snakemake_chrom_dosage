@@ -54,7 +54,7 @@ cd snakemake_chrom_dosage
 
 Often, visitors don't have a home folder on the genome center clusters. In other words,
 the folder ```home/yourUserName``` doesn't exist. If this is the case for you, skip to step
-4 and see [here][./conda_alt_install.md] for a workaround.
+4 and see [conda_alt_install.md] for a workaround.
 
 ```
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
