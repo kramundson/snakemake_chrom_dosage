@@ -10,7 +10,7 @@ rule bedtools_coverage:
         genome=re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
         bam="data/mapQ-filter/{sample}.bam",
         bai="data/mapQ-filter/{sample}.bam.bai"
-    output:"
+    output:
         "data/bedtools_coverage/{sample}.bed"
     shell: '''
         bedtools coverage -sorted -nonamecheck -header -g {input.genome} \

@@ -2,7 +2,7 @@ rule get_genome:
     params:
         nucleus=[config["genomelinks"][0],config["genomelinks"][0].split("/")[-1]],
         chloro=[config["genomelinks"][1],config["genomelinks"][1].split("/")[-1]],
-        mito=[config["genomelinks"][1], config["genomelinks"][2].split("/")[-1]]
+        mito=[config["genomelinks"][2], config["genomelinks"][2].split("/")[-1]]
     output:
         "data/genome/{}".format(x) for x in config["organelle_genomes"]
     shell: """

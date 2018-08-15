@@ -16,6 +16,7 @@
 # sbatch runSnakes.slurm
 
 import re
+from Bio import SeqIO
 shell.executable("bash")
 
 configfile: "config.yaml"
