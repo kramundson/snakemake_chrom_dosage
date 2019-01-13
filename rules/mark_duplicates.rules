@@ -12,12 +12,12 @@
 
 rule mark_duplicates:
     input:
-        "data/merged/{sample}.bam"
+        "data/aligned_reads/{sample}-{unit}.bam"
     output:
-        bam="data/dedup/{sample}.bam",
-        metrics="data/dedup/{sample}-metrics.txt"
+        bam="data/dedup/{sample}-{unit}.bam",
+        metrics="data/dedup/{sample}-{unit}-metrics.txt"
     log:
-        "log/picard/{sample}.log"
+        "log/picard/{sample}-{unit}.log"
     params:
         # jarpath=config["params"]["mark_duplicates"]["jarpath"],
         # java_heap=config["params"]["mark_duplicates"]["java_heap"],
