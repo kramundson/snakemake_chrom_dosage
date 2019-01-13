@@ -8,6 +8,6 @@ rule cutadapt_hardtrim:
     params:
         "-a {} {}".format(config["adapter"], config["params"]["cutadapt_hardtrim"]["qual"])
     log:
-        "logs/cutadapt/{sample}-{unit}.log"
+        "log/cutadapt/{sample}-{unit}.log"
     wrapper:
         "0.17.4/bio/cutadapt/se"

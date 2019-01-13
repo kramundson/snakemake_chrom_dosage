@@ -1,6 +1,6 @@
 rule bam_mapqual_filter:
     input:
-         "data/dedup/{sample}.bam"
+         "data/merged/{sample}.bam"
     output:
         "data/mapQ-filter/{sample}.bam"
     params:

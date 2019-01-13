@@ -25,7 +25,7 @@ rule make_fofn:
         
         for i in samples.items():
             o = open("fofn/{}-units.fofn".format(i[0]), 'w')
-            out = ["data/aligned_reads/{}.bam".format(x) for x in i[1]]
+            out = ["data/dedup/{}.bam".format(x) for x in i[1]]
             o.write('\n'.join(out)+'\n')
             o.close()
         

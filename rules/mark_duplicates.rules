@@ -1,4 +1,3 @@
-# uses snakemake wrapper repository, https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/picard/markduplicates.html
 # Runs out of java heap space if using miniconda default.
 # To correct, add desired memory to jvm_mem_opts in the picard shell wrapper:
 # miniconda3/envs/potato/share/picard-2.14.1-0/picard 
@@ -18,11 +17,19 @@ rule mark_duplicates:
         bam="data/dedup/{sample}.bam",
         metrics="data/dedup/{sample}-metrics.txt"
     log:
-        "logs/picard/{sample}.log"
+        "log/picard/{sample}.log"
     params:
-        jarpath=config["params"]["mark_duplicates"]["jarpath"],
-        java_heap=config["params"]["mark_duplicates"]["java_heap"],
+        # jarpath=config["params"]["mark_duplicates"]["jarpath"],
+        # java_heap=config["params"]["mark_duplicates"]["java_heap"],
         opt=config["params"]["mark_duplicates"]["opt"]
-    shell:
-        "java {params.java_heap} -jar {params.jarpath} MarkDuplicates INPUT={input} "
-        "OUTPUT={output.bam} METRICS_FILE={output.metrics} {params.opt} 2> {log}"
+    shell: """
+        picard MarkDuplicates \
+            INPUT={input} \
+            OUTPUT={output.bam} \
+            METRICS_FILE={output.metrics} \
+            {params.opt} \
+            2> {log}
+    """
+        # when needing to specify JVM allocation manually
+        # "java {params.java_heap} -jar {params.jarpath} MarkDuplicates INPUT={input} "
+        # "OUTPUT={output.bam} METRICS_FILE={output.metrics} {params.opt} 2> {log}"
