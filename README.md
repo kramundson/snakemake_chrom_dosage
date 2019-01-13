@@ -37,8 +37,8 @@ This pipeline automates that step.
 7. Count reads in non-overlapping bins (bedtools coverage)
 8. Normalization to a user-specified control sample and dosage plot generation (custom R script)
 
-For each sample, one plot showing relative coverage values per bin, one table with the
-raw read counts and relative coverage values for each bin.
+For each sample, one plot showing relative coverage values per bin and one table with the
+raw read counts and relative coverage values for each bin will be put in ```data/plots```
 
 ## Test case
 
@@ -84,8 +84,8 @@ Note: You will need to change hardcoded paths to picard.jar in config.yaml.
 # initiate reference genome and sample tracking, uses 8 cores
 snakemake -s 1_init_genome_fofn.snakes --cores 8
 
-# download reads, data processing, make dosage plots using 12 cores
-snakemake -s 2_fastq_to_dosage_plot.snakes --cores 12
+# download reads, data processing, make dosage plots using 8 cores
+snakemake -s 2_fastq_to_dosage_plot.snakes --cores 8
 ```
 
 Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual jobs with
@@ -125,6 +125,6 @@ Command line parameters can also be changed here, if desired.
 
 ```
 snakemake -s 1_init_genome_fofn.snakes --cores 8
-snakemake -s 2_fastq_to_dosage_plot.snakes --cores 12
+snakemake -s 2_fastq_to_dosage_plot.snakes --cores 8
 ```
 

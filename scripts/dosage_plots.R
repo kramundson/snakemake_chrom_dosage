@@ -85,7 +85,7 @@ plot.dosage <- function(x,y) {
           axis.ticks=element_blank(),
           plot.title=element_text(size=12,face="bold",hjust=0))
   write.table(chr.list.dosage.stuffed, gsub(".pdf", ".tsv", args[3]), 
-              quote=F,eol='\n',row.names=F)
+              quote=F,sep="\t",eol='\n',row.names=F)
   ggsave(args[3], width=10,height=2,units="in",plot=plt.dosage,device="pdf")
 }
 
