@@ -127,3 +127,4 @@ Command line parameters can also be changed here, if desired.
 snakemake -s 1_init_genome_fofn.snakes --cores 8
 snakemake -s 2_fastq_to_dosage_plot.snakes --cores 12
 ```
+
