@@ -5,7 +5,7 @@
         "time" : "12:00:00",
         "c" : 1,
         "n" : 1,
-        "partition" : "gc",
+        "partition" : "production",
         "mempercpu" : "2G"
     },
     "get_genome" :

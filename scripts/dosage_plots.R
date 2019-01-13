@@ -50,7 +50,7 @@ mid.dosage <- function(x) {
 }
 
 plot.dosage <- function(x,y) {
-  numblanks.dosage <- 15
+  numblanks.dosage <- 45
   stuf.d <- c(rep(NA, numblanks.dosage))
   dosage.stuffer <- data.frame("chrom"=stuf.d, "start"=stuf.d, "end"=stuf.d,
                                "readcount"=stuf.d, "bases_covered"=stuf.d,
