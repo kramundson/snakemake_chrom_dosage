@@ -46,7 +46,7 @@ As a test case, this pipeline will download reads for 3 low-pass samples from NC
 and the DM v4.04 reference assembly, then make dosage plots using one of the samples
 as a control for the other two. Here's an example plot generated from the test case:
 
-![alt_text][./test_output/LOP868_529-dosage_plot.pdf]
+![alt_text][./test_output/LOP868_529-dosage_plot.png]
 
 1. Clone this repo:
 
