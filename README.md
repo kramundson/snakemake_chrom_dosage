@@ -46,7 +46,11 @@ As a test case, this pipeline will download reads for 3 low-pass samples from NC
 and the DM v4.04 reference assembly, then make dosage plots using one of the samples
 as a control for the other two. Here's an example plot generated from the test case:
 
+<<<<<<< HEAD
 ![alt_text]("./test_output/LOP868_529-dosage_plot.png")
+=======
+![alt_text]("https://github.com/kramundson/snakemake_chrom_dosage/blob/master/test_output/LOP868_529-dosage_plot.png")
+>>>>>>> 88db2782bebed782a42891ea8a9a87dbf54384d1
 
 1. Clone this repo:
 
