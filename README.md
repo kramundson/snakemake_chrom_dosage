@@ -44,7 +44,9 @@ raw read counts and relative coverage values for each bin will be put in ```data
 
 As a test case, this pipeline will download reads for 3 low-pass samples from NCBI SRA
 and the DM v4.04 reference assembly, then make dosage plots using one of the samples
-as a control for the other two.
+as a control for the other two. Here's an example plot generated from the test case:
+
+![alt_text][./test_output/LOP868_529-dosage_plot.pdf]
 
 1. Clone this repo:
 
@@ -92,7 +94,9 @@ Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual
 job-specific compute allocation specified in ```cluster.yaml```.
 
 ```
-# to run cluster implementation, work in progress
+# to run cluster implementation
+# test case was successful on UCD cluster
+# will crash with very large files at MarkDuplicates due to insufficient JVM memory allocation
 sbatch runSnakes.slurm
 ```
 
@@ -120,6 +124,10 @@ The leading path will always be ```data/bedtools_coverage/```, and the file name
 the sample identifier (from units.tsv) for the control sample with a .bed extension
 
 Command line parameters can also be changed here, if desired.
+
+Note: If you want to use this with individual bam files larger than a few million reads,
+you will need to allocate more memory to the Java Virtual Machine during the
+MarkDuplicates step. Alternatively, use a different PCR duplicate remover.
 
 4. Run workflow
 
