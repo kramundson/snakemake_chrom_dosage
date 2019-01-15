@@ -78,8 +78,6 @@ conda env create --name dosage -f environment.yaml
 
 4. Modify ```config.yaml``` to suit your needs:
 
-Note: You will need to change hardcoded paths to picard.jar in config.yaml.
-
 5. Run workflow:
 
 ```
