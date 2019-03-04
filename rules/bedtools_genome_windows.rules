@@ -6,8 +6,8 @@ rule bedtools_genome_windows:
         fasta=config["genome"],
         fai=config["genome"]+".fai",
     output:
-        bedtools_genome=re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
-        bedtools_windows=re.sub("(\.fasta$|\.fa$)", "_windows.bed", config["genome"])
+        bedtools_genome=re.sub("(\.fasta$|\.fa$|\.con$)", ".genome", config["genome"]),
+        bedtools_windows=re.sub("(\.fasta$|\.fa$|\.con$)", "_windows.bed", config["genome"])
     params:
         window=config["params"]["bedtools"]["window"]
     shell: """

@@ -1,16 +1,12 @@
 units: units.tsv
 
-genome: "data/genome/potato_dm_v404_all_pm_un_chloro_mito.fasta"
+genome: "data/genome/all.con"
     
 genomelinks:
-    ["http://solanaceae.plantbiology.msu.edu/data/potato_dm_v404_all_pm_un.fasta.zip",
-    "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta.zip",
-    "http://solanaceae.plantbiology.msu.edu/data/S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta.zip"]
+    ["http://rice.plantbiology.msu.edu/pub/data/Eukaryotic_Projects/o_sativa/annotation_dbs/pseudomolecules/version_7.0/all.dir/all.con"]
               
 organelle_genomes:
-    ["potato_dm_v404_all_pm_un.fasta",
-    "S_tuberosum_Group_Phureja_chloroplast_DM1-3-516-R44.fasta",
-    "S_tuberosum_Group_Phureja_mitochondrion_DM1-3-516-R44.fasta"]
+    ["all.con"]
 
 # sequencing adapter
 adapter: AGATCGGAAGAGC
@@ -48,5 +44,5 @@ params:
     map_qual_filter: "-q 10"
 
 dosage_control:
-     - "data/bedtools_coverage/LOP868_538.bed"
+     - "data/bedtools_coverage/WTA1.bed"
 
