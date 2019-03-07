@@ -26,8 +26,8 @@ rule all:
         config["genome"],
         config["genome"]+".bwt",
         config["genome"]+".fai",
-        re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
-        re.sub("(\.fasta$|\.fa$)", "_windows.bed", config["genome"]),
+        re.sub("(\.fasta$|\.fa$|\.con$)", ".genome", config["genome"]),
+        re.sub("(\.fasta$|\.fa$|\.con$)", "_windows.bed", config["genome"]),
         "fofn/unit_fofns.made"
 
 #include: "rules/get_genome.rules"
