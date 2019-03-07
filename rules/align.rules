@@ -11,8 +11,8 @@ rule align:
         config["params"]["align"]["threads"]
     params:
         rg="'@RG\\tID:{unit}\\tSM:{sample}'",
-        bwa_threads=3*config["params"]["align"]["threads"] // 4,
-        sort_threads=config["params"]["align"]["threads"] // 4,
+        bwa_threads=config["params"]["align"]["threads"] // 2,
+        sort_threads=config["params"]["align"]["threads"] // 2,
         sort_mem=config["params"]["align"]["sort_mem"]
     shell: """
         bwa mem -R {params.rg} -t {params.bwa_threads} {input.ref} {input.reads} \
