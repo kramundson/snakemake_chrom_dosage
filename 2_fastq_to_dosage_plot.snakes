@@ -2,13 +2,14 @@
 # This Snakefile handles dataset-specific analysis, assuming that reference genome
 # file dependencies and file of output filenames have been made using init_genome.snakes
 
-import re
+import re, sys
+sys.path = sys.path[-4:] # sketchy quick fix. Doesn't allow dry run to work
 import pandas as pd
 shell.executable('bash')
 
 configfile: "config.yaml"
 
-units = pd.read_table(config["units"], index_col=["sample", "unit"], dtype=str)
+units = pd.read_csv(config["units"], index_col=["sample", "unit"], dtype=str, sep="\t")
 units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])
 
 def is_single_end(sample,unit):
