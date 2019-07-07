@@ -82,10 +82,10 @@ conda env create --name dosage -f environment.yaml
 
 ```
 # initiate reference genome and sample tracking, uses 8 cores
-snakemake -s 1_init_genome_fofn.snakes --cores 8
+snakemake -s 1_init_genome_fofn.snakes --cores 8 > init_genome_fofn.out 2> init_genome_fofn.err
 
 # download reads, data processing, make dosage plots using 8 cores
-snakemake -s 2_fastq_to_dosage_plot.snakes --cores 8
+snakemake -s 2_fastq_to_dosage_plot.snakes --cores 8 > fastq_to_dosage_run1.out 2> fastq_to_dosage_run1.err
 ```
 
 Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual jobs with
@@ -103,34 +103,72 @@ To run this on a different cluster, ```cluster.yaml```, ```config.yaml```, and
 
 ## How to run with your own datasets
 
-1. Symlink or copy uninterleaved reads to be analyzed to the folder ```./data/reads```
+Here, we'll go though an example of how to add new samples to the analysis using publicly
+available reads from NCBI SRA. We're going to analyze one more sample, called LOP868_005.
+The NCBI SRA ID for this library is SRR6123029. It consists of ~4.5 million 50bp single-end
+Illumina reads.
 
-2. Edit ```units.tsv``` to suit your needs:
+1. Put new reads to be analyzed in the folder ```./data/reads``` that was created during
+the test case. Here, we download the reads directly from SRA using fastq-dump, which is
+included with ```sra-tools=2.8.2``` that was installed using conda.
 
-units.tsv is a 5-column tab delimited text file. Each column specifies the following:
+```
+fastq-dump --gzip -B --split-3 -O data/reads SRR6123029
+```
+
+If you have your own reads to add, this step is even easier. All you need to do is put
+them in the ```data/reads``` folder.
+
+2. Add sample and unit information for new reads to ```units.tsv```.
+
+To add information to LOP868_005, I'm going to parse information available from NCBI SRA.
+The necessary info can be found at NCBI [here](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRP119212)
+
+Then, download the SRA RunInfo table. I've downloaded the table and saved it in this repo
+as ```LOP_SraRunTable.txt```.
+
+To add the necessary info from sample LOP868_005, we'll extract only the rows and columns
+we need, do a little column rearranging, and add the rearranged row to the end of the
+existing units.tsv column. Note, only do this step once! If you repeat this step, it will
+keep adding lines to ```units.tsv```.
+
+If you're adding your own reads, the fq1 column should be the name of the file you put
+in ```data/reads```. The fq2 column should be "NaN", and the parhap column "haploid".
+For the sample column, use alphanumeric characters and underscores to assign biological
+sample names. Rows in ```units.tsv``` corresponding to the same biological sample can have
+the same name, if desired. For the unit column, use alphanumeric characters and
+underscores. Each row in ```units.tsv``` should be a unique name, i.e., do not duplicate
+unit names.
+
+```
+grep "SRR6123029" LOP_SraRunTable.txt | awk -v OFS='\t' '{print $19,$17,$17".fastq.gz","NaN","haploid"}' >> units.tsv
+```
+
+Notes on the logic of ```units.tsv```:
+
+units.tsv is a 5-column tab delimited text file. The columns specify the following:
 
 sample: unique biological sample
 units: unique combination of biolgical sample, library and sequencing run
 fq1: name of file corresponding to the sample-unit combination located in ```data/reads```
-fq2: always NaN for this analysis (left in for paired-end data analyses, that takes the same type of table)
-parhap: a portmenteau of parent-haploid, basically set to "mother" for control sample and "haploid" to test samples
+fq2: always NaN for this analysis (left in for paired-end data analyses that takes the same type of table)
+parhap: left in from legacy version, just put "haploid" here and it will run fine.
 
-3. Edit ```config.yaml``` to suit your needs
+3. Run the workflow again. Snakemake should start processing the new sample.
 
-The main thing to change is the name of the control file for the relative coverage analysis.
-The leading path will always be ```data/bedtools_coverage/```, and the file name will be
-the sample identifier (from units.tsv) for the control sample with a .bed extension
+```
+snakemake --cores 8 > fastq_to_dosage_run2.out 2> fastq_to_dosage_run2.err
+```
+
+Other notes:
+
+To change which sample is used as the control, you will need to edit ```config.yaml```.
+Currently, sample LOP868_538 is used as the control. You can change this to be any sample
+in your ```units.tsv``` file, but be sure to keep the preceding path
+```data/bedtools_coverage``` and give the sample name a .bed extension.
 
 Command line parameters can also be changed here, if desired.
 
-Note: If you want to use this with individual bam files larger than a few million reads,
+If you want to use this with individual bam files larger than a few million reads,
 you will need to allocate more memory to the Java Virtual Machine during the
 MarkDuplicates step. Alternatively, use a different PCR duplicate remover.
-
-4. Run workflow
-
-```
-snakemake -s 1_init_genome_fofn.snakes --cores 8
-snakemake -s 2_fastq_to_dosage_plot.snakes --cores 8
-```
-
