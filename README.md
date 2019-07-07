@@ -74,11 +74,12 @@ source $HOME/.bashrc
 ```
 conda env create --name dosage -f environment.yaml
 # follow prompts to finish environment build
+
+# activate environment
+source activate dosage
 ```
 
-4. Modify ```config.yaml``` to suit your needs:
-
-5. Run workflow:
+4. Run workflow:
 
 ```
 # initiate reference genome and sample tracking, uses 8 cores
@@ -132,6 +133,10 @@ we need, do a little column rearranging, and add the rearranged row to the end o
 existing units.tsv column. Note, only do this step once! If you repeat this step, it will
 keep adding lines to ```units.tsv```.
 
+```
+grep "SRR6123029" LOP_SraRunTable.txt | awk -v OFS='\t' '{print $19,$17,$17".fastq.gz","NaN","haploid"}' >> units.tsv
+```
+
 If you're adding your own reads, the fq1 column should be the name of the file you put
 in ```data/reads```. The fq2 column should be "NaN", and the parhap column "haploid".
 For the sample column, use alphanumeric characters and underscores to assign biological
@@ -139,10 +144,6 @@ sample names. Rows in ```units.tsv``` corresponding to the same biological sampl
 the same name, if desired. For the unit column, use alphanumeric characters and
 underscores. Each row in ```units.tsv``` should be a unique name, i.e., do not duplicate
 unit names.
-
-```
-grep "SRR6123029" LOP_SraRunTable.txt | awk -v OFS='\t' '{print $19,$17,$17".fastq.gz","NaN","haploid"}' >> units.tsv
-```
 
 Notes on the logic of ```units.tsv```:
 
@@ -168,7 +169,3 @@ in your ```units.tsv``` file, but be sure to keep the preceding path
 ```data/bedtools_coverage``` and give the sample name a .bed extension.
 
 Command line parameters can also be changed here, if desired.
-
-If you want to use this with individual bam files larger than a few million reads,
-you will need to allocate more memory to the Java Virtual Machine during the
-MarkDuplicates step. Alternatively, use a different PCR duplicate remover.
