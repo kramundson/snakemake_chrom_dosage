@@ -11,6 +11,11 @@ configfile: "config.yaml"
 units = pd.read_table(config["units"], index_col=["sample", "unit"], dtype=str)
 units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])
 
+# replace fofn system with simple Python dict
+samples = {}
+for i in units.index.levels[0]:
+    samples[i] = ["data/dedup/{}-{}.bam".format(i,j) for j in units.loc[i].index]
+
 def is_single_end(sample,unit):
     return pd.isnull(units.loc[(sample, unit), "fq2"])
 
@@ -47,4 +52,4 @@ include: "rules/align.rules"
 include: "rules/cutadapt.rules"
 include: "rules/cutadapt_hardtrim.rules"
 include: "rules/get_SRA_reads.rules"
-include: "rules/make_fofn.rules"
+# include: "rules/make_fofn.rules"

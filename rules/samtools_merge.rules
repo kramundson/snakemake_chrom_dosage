@@ -1,8 +1,10 @@
 rule samtools_merge:
     input:
-        "fofn/{sample}-units.fofn",
-        lambda x: [line.rstrip('\n') for line in open("fofn/{}-units.fofn".format(x.sample))]
+        # "fofn/{sample}-units.fofn",
+        # lambda x: [line.rstrip('\n') for line in open("fofn/{}-units.fofn".format(x.sample))]
+        lambda x: samples[x.sample]
     output:
         "data/merged/{sample}.bam"
     shell:
-        "samtools merge -b {input[0]} {output}"
+        # "samtools merge -b {input[0]} {output}"
+        "samtools merge {output} {input}"
