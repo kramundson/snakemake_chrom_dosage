@@ -167,5 +167,4 @@ To change which sample is used as the control, you will need to edit ```config.y
 Currently, sample LOP868_538 is used as the control. You can change this to be any sample
 in your ```units.tsv``` file, but be sure to keep the preceding path
 ```data/bedtools_coverage``` and give the sample name a .bed extension.
-
-Command line parameters can also be changed here, if desired.
+Other command line parameters can also be changed here, if desired.
