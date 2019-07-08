@@ -1,6 +1,6 @@
 rule dosage_plots:
     input:
-        controlbed=config["dosage_control"],
+        controlbed="data/bedtools_coverage/{}.bed".format(config["dosage_control"]),
         testbed="data/bedtools_coverage/{sample}.bed"
     output:
         "data/plots/{sample}-dosage_plot.pdf"

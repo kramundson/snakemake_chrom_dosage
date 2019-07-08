@@ -47,6 +47,4 @@ params:
     
     map_qual_filter: "-q 10"
 
-dosage_control:
-     - "data/bedtools_coverage/LOP868_538.bed"
-
+dosage_control: "LOP868_538"

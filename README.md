@@ -1,5 +1,10 @@
 snakemake_chrom_dosage, a karyotyping tool
 
+All information obtained and or inferred with this software is without any implied
+warranty of fitness for any purpose or use whatsoever.
+
+Use at your own risk. I cannot guarantee support.
+
 ## Summary
 
 This Snakemake workflow outputs read coverage by bin across a reference sequence, using
@@ -152,10 +157,9 @@ snakemake -s fastq_to_dosage_plot.snakes --cores 8 > fastq_to_dosage_run2.out 2>
 Other notes:
 
 To change which sample is used as the control, you will need to edit ```config.yaml```.
-Currently, sample LOP868_538 is used as the control. You can change this to be any sample
-in your ```units.tsv``` file, but be sure to keep the preceding path
-```data/bedtools_coverage``` and give the sample name a .bed extension.
-Other command line parameters can also be changed here, if desired.
+Currently, sample LOP868_538 is used as the control. You can change this to be any valid
+sample name in your ```units.tsv``` file. Other command line parameters can also be
+changed here, if desired.
 
 Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual jobs with
 job-specific compute allocation specified in ```cluster.yaml```.
