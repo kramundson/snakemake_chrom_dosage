@@ -82,25 +82,9 @@ source activate dosage
 4. Run workflow:
 
 ```
-# initiate reference genome and sample tracking, uses 8 cores
-snakemake -s 1_init_genome_fofn.snakes --cores 8 > init_genome_fofn.out 2> init_genome_fofn.err
-
-# download reads, data processing, make dosage plots using 8 cores
-snakemake -s 2_fastq_to_dosage_plot.snakes --cores 8 > fastq_to_dosage_run1.out 2> fastq_to_dosage_run1.err
+# build reference genome, download reads, data processing, make dosage plots using 8 cores
+snakemake -s fastq_to_dosage_plot.snakes --cores 8 > fastq_to_dosage_run1.out 2> fastq_to_dosage_run1.err
 ```
-
-Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual jobs with
-job-specific compute allocation specified in ```cluster.yaml```.
-
-```
-# to run cluster implementation
-# test case was successful on UCD cluster
-# will crash with very large files at MarkDuplicates due to insufficient JVM memory allocation
-sbatch runSnakes.slurm
-```
-
-To run this on a different cluster, ```cluster.yaml```, ```config.yaml```, and
-```runSnakes.slurm``` will  need to be modified to suit your needs.
 
 ## How to run with your own datasets
 
@@ -131,9 +115,13 @@ as ```LOP_SraRunTable.txt```.
 To add the necessary info from sample LOP868_005, we'll extract only the rows and columns
 we need, do a little column rearranging, and add the rearranged row to the end of the
 existing units.tsv column. Note, only do this step once! If you repeat this step, it will
-keep adding lines to ```units.tsv```.
+keep adding lines to ```units.tsv```. We'll make a backup copy of units.tsv just in case.
 
 ```
+# copy original units.tsv just in case
+cp units.tsv units.tsv.bak
+
+# extract rows/cols from LOP_SraRunTable.txt and add to units.tsv
 grep "SRR6123029" LOP_SraRunTable.txt | awk -v OFS='\t' '{print $19,$17,$17".fastq.gz","NaN","haploid"}' >> units.tsv
 ```
 
@@ -158,7 +146,7 @@ parhap: left in from legacy version, just put "haploid" here and it will run fin
 3. Run the workflow again. Snakemake should start processing the new sample.
 
 ```
-snakemake --cores 8 > fastq_to_dosage_run2.out 2> fastq_to_dosage_run2.err
+snakemake -s fastq_to_dosage_plot.snakes --cores 8 > fastq_to_dosage_run2.out 2> fastq_to_dosage_run2.err
 ```
 
 Other notes:
@@ -168,3 +156,16 @@ Currently, sample LOP868_538 is used as the control. You can change this to be a
 in your ```units.tsv``` file, but be sure to keep the preceding path
 ```data/bedtools_coverage``` and give the sample name a .bed extension.
 Other command line parameters can also be changed here, if desired.
+
+Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual jobs with
+job-specific compute allocation specified in ```cluster.yaml```.
+
+```
+# to run cluster implementation
+# test case was successful on UCD cluster
+# will crash with very large files at MarkDuplicates due to insufficient JVM memory allocation
+sbatch runSnakes.slurm
+```
+
+To run this on a different cluster, ```cluster.yaml```, ```config.yaml```, and
+```runSnakes.slurm``` will  need to be modified to suit your needs.
