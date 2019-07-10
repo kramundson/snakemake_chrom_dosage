@@ -1,4 +1,5 @@
-snakemake_chrom_dosage, a karyotyping tool
+# Karyotyping with DNAseq data
+snakemake_chrom_dosage
 
 All information obtained and or inferred with this software is without any implied
 warranty of fitness for any purpose or use whatsoever.
@@ -154,22 +155,25 @@ parhap: left in from legacy version, just put "haploid" here and it will run fin
 snakemake -s fastq_to_dosage_plot.snakes --cores 8 > fastq_to_dosage_run2.out 2> fastq_to_dosage_run2.err
 ```
 
-Other notes:
+## Other notes
 
 To change which sample is used as the control, you will need to edit ```config.yaml```.
 Currently, sample LOP868_538 is used as the control. You can change this to be any valid
 sample name in your ```units.tsv``` file. Other command line parameters can also be
 changed here, if desired.
 
-Option for UCD users: Cluster-friendly workflow. Snakemake will spawn individual jobs with
-job-specific compute allocation specified in ```cluster.yaml```.
+ADVANCED USERS: I've included a master job submission script to run this workflow on the
+UC Davis Genome Center cluster. Snakemake will spawn jobs with job-specific compute
+allocation specified in the file ```cluster.yaml```. Running this workflow on the cluster
+saves time, particularly at the variant calling step, and allows pipeline restart after
+failure without much hassle.
+
+To run this on a different cluster, ```cluster.yaml```, ```config.yaml```, and
+```runSnakes.slurm``` will  need to be modified to suit your needs.
 
 ```
 # to run cluster implementation
 # test case was successful on UCD cluster
-# will crash with very large files at MarkDuplicates due to insufficient JVM memory allocation
+# will crash with very large BAM files at MarkDuplicates due to insufficient JVM memory allocation
 sbatch runSnakes.slurm
 ```
-
-To run this on a different cluster, ```cluster.yaml```, ```config.yaml```, and
-```runSnakes.slurm``` will  need to be modified to suit your needs.
